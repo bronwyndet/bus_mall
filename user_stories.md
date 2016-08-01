@@ -1,6 +1,6 @@
-# User Stories for Bus Mall Marketing Project
+## User Stories for Bus Mall Marketing Project
 
-*Marketing Team:*
+*_Marketing Team_*
 
 a) As a marketing team, we want to be able to interpret the results of the survey.
 
@@ -12,7 +12,7 @@ d) As a marketing team, we want to get useful results from the product survey th
 
 d) As a marketing team, we want the survey site to be attractive and usable for the participants.
 
-*Developer:*
+*_Developer_*
 
 a) As a developer, I want to create a functional site that meets my client's needs.
 
@@ -22,7 +22,7 @@ c) As a developer, I want my code to be human readable and make sense to other d
 
 d) As a developer, I want the Participant (aka "user") to be able to easily understand the directions for using the marketing survey.
 
-*Participant*
+*_Participant_*
 
 a) As a participant, I want to be able to understand the directions for using the survey.
 
