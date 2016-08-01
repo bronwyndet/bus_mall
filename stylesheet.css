@@ -1,0 +1,15 @@
+h1 {
+  font-size: 2em;
+}
+
+.surveyField {
+  border: 2px dashed orange;
+  width: 725px;
+  margin: auto;
+}
+
+.imageRow {
+  border: 2px dashed green;
+  width: 200px;
+  margin: 10px;
+}
