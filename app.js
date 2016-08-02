@@ -37,8 +37,6 @@ new CatalogImage('Watering Can', 'img/water-can.jpg');
 new CatalogImage('Contained Wine Glass', 'img/wine-glass.jpg');
 
 
-
-
 //REACHING OUT TO AND ACCESSING THE PAGE
 var clickField = document.getElementById('surveyField');
 var clickLeft = document.getElementById('imageLeft');
@@ -46,13 +44,14 @@ var clickCenter = document.getElementById('imageCenter');
 var clickRight = document.getElementById('imageRight');
 
 
-// CODE TO MAKE IMAGES APPEAR ON PAGE, random images, no 3 alike, (and not just displayed
+// CODE TO MAKE RANDOM IMAGES APPEAR ON PAGE AND DIFFERENT IN ALL 3 POSITIONS (and not just displayed
 var pickRandom = [];
 console.log(pickRandom);
 
 function randomizer () {
 
   var a = Math.floor(Math.random() * (19 - 0 + 1) + 0);
+  // justDisplayed.push(a);
   pickRandom.push(a);
 
   var b = Math.floor(Math.random() * (19 - 0 + 1) + 0);
@@ -75,7 +74,9 @@ function randomizer () {
   };
 
 
-//METHOD TO PREVENT IMAGE FROM BEING DISPLAYED THAT WAS JUST DISPLAYED ON PREVOIUS CLICK (not working yet)
+//METHOD TO PREVENT IMAGE FROM BEING DISPLAYED THAT WAS JUST DISPLAYED ON PREVOIUS CLICK
+// (not working yet)
+  //
   // var justDisplayed = [];
   // justDisplayed[0].push(pickRandom[0]);
   // justDisplayed[1].push(pickRandom[1]);
@@ -91,10 +92,10 @@ function randomizer () {
   // };
   //
   // justDisplayed = null;
-
-  console.log(a);
-  console.log(b);
-  console.log(c);
+  //
+  // console.log(a);
+  // console.log(b);
+  // console.log(c);
 
 };
 
