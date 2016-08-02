@@ -44,14 +44,25 @@ var clickCenter = document.getElementById('imageCenter');
 var clickRight = document.getElementById('imageRight');
 
 
-// CODE TO MAKE RANDOM IMAGES APPEAR ON PAGE AND DIFFERENT IN ALL 3 POSITIONS (and not just displayed
 var pickRandom = [];
 console.log(pickRandom);
 
+// CODE TO MAKE RANDOM IMAGES APPEAR ON PAGE AND DIFFERENT IN ALL 3 POSITIONS (and not just displayed
 function randomizer () {
+
+  var justDisplayed = [];
+
+  // var justDisplayedLeft = 0;
+  // var justDisplayedCenter = 0;
+  // var justDisplayedRight = 0;
+  // console.log(justDisplayedLeft);
+  // console.log(justDisplayedCenter);
+  // console.log(justDisplayedRight);
+
 
   var a = Math.floor(Math.random() * (19 - 0 + 1) + 0);
   // justDisplayed.push(a);
+
   pickRandom.push(a);
 
   var b = Math.floor(Math.random() * (19 - 0 + 1) + 0);
@@ -74,24 +85,24 @@ function randomizer () {
   };
 
 
-//METHOD TO PREVENT IMAGE FROM BEING DISPLAYED THAT WAS JUST DISPLAYED ON PREVOIUS CLICK
+// METHOD TO PREVENT IMAGE FROM BEING DISPLAYED THAT WAS JUST DISPLAYED ON PREVOIUS CLICK
 // (not working yet)
+
+  var justDisplayed = [];
+  console.log(justDisplayed);
+
+  for (var i = 0; i < justDisplayed.length; i++) {
+    if (justDisplayed[i] === pickRandom[0] || justDisplayed[i] === pickRandom[1] || justDisplayed === pickRandom[2]) {
+      randomizer();
+    } else {
+      return;
+    }
+  };
   //
-  // var justDisplayed = [];
-  // justDisplayed[0].push(pickRandom[0]);
-  // justDisplayed[1].push(pickRandom[1]);
-  // justDisplayed[2].push(pickRandom[2]);
-  // console.log(justDisplayed);
-  //
-  // for (var i = 0; i < justDisplayed.length; i++) {
-  //   if (justDisplayed[i] === pickRandom[0] || justDisplayed[i] === pickRandom[1] || justDisplayed === pickRandom[2]) {
-  //     randomizer();
-  //   } else {
-  //     return;
-  //   }
-  // };
-  //
-  // justDisplayed = null;
+  // justDisplayedLeft = null;
+  // justDisplayedLeft = null;
+  // justDisplayedLeft = null;
+
   //
   // console.log(a);
   // console.log(b);
@@ -101,6 +112,7 @@ function randomizer () {
 
 function randomLeft() {
   clickLeft.src = productImageArray[pickRandom[0]].imagePath;
+  // this.justDisplayedLeft = productImageArray[pickRandom[0]];
 };
 
 function randomCenter () {
@@ -117,6 +129,9 @@ randomCenter(pickRandom[1]);
 randomRight(pickRandom[2]);
 // clickCenter.src = productImageArray[1].imagePath;
 // clickRight.src = productImageArray[2].imagePath;
+
+var canvas = document.getElementById('votingResults');
+var ctx = canvas.getContext("2d");
 
 
 // EVENT HANDLER TO ...
