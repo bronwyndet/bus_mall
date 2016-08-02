@@ -45,35 +45,52 @@ var clickLeft = document.getElementById('imageLeft');
 var clickCenter = document.getElementById('imageCenter');
 var clickRight = document.getElementById('imageRight');
 
-// CODE TO MAKE IMAGES APPEAR ON PAGE
 
+// CODE TO MAKE IMAGES APPEAR ON PAGE, random images, no 3 alike, (and not just displayed
 var pickRandom = [];
 console.log(pickRandom);
 
-var check = false;
-
 function randomizer () {
+
   var a = Math.floor(Math.random() * (19 - 0 + 1) + 0);
   pickRandom.push(a);
 
   var b = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  if (b === a && check === false) {
+  if (b === a) {
     b++;
     pickRandom.push(b);
-    this.imageDisplays[a] += 1;
-    check = true;
   } else {
     pickRandom.push(b);
-  }
+  };
 
   var c = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  if (c === a || c === b && check === false) {
+  if (c === b && c !== (a + 1)) {
     c++;
     pickRandom.push(c);
-    check = true;
+  } else if (c === a && c !== (b - 1)) {
+    c++;
+    pickRandom.push(c);
   } else {
     pickRandom.push(c);
-  }
+  };
+
+
+//METHOD TO PREVENT IMAGE FROM BEING DISPLAYED THAT WAS JUST DISPLAYED ON PREVOIUS CLICK (not working yet)
+  // var justDisplayed = [];
+  // justDisplayed[0].push(pickRandom[0]);
+  // justDisplayed[1].push(pickRandom[1]);
+  // justDisplayed[2].push(pickRandom[2]);
+  // console.log(justDisplayed);
+  //
+  // for (var i = 0; i < justDisplayed.length; i++) {
+  //   if (justDisplayed[i] === pickRandom[0] || justDisplayed[i] === pickRandom[1] || justDisplayed === pickRandom[2]) {
+  //     randomizer();
+  //   } else {
+  //     return;
+  //   }
+  // };
+  //
+  // justDisplayed = null;
 
   console.log(a);
   console.log(b);
@@ -82,23 +99,14 @@ function randomizer () {
 };
 
 function randomLeft() {
-  // var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  // console.log(randomLeft[0]);
-  // productImageArray[pickRandom[0]].imageDisplays += 1;
   clickLeft.src = productImageArray[pickRandom[0]].imagePath;
 };
 
-
 function randomCenter () {
-  // var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  // console.log(randomCenter[1]);
   clickCenter.src = productImageArray[pickRandom[1]].imagePath;
 };
 
-
 function randomRight () {
-  // var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  // console.log(randomRight[2]);
   clickRight.src = productImageArray[pickRandom[2]].imagePath;
 };
 
