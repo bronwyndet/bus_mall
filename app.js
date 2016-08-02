@@ -47,30 +47,65 @@ var clickRight = document.getElementById('imageRight');
 
 // CODE TO MAKE IMAGES APPEAR ON PAGE
 
+var pickRandom = [];
+console.log(pickRandom);
 
-function randomLeft () {
-  var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  console.log(randomLeft);
-  clickLeft.src = productImageArray[i].imagePath;
+var check = false;
+
+function randomizer () {
+  var a = Math.floor(Math.random() * (19 - 0 + 1) + 0);
+  pickRandom.push(a);
+
+  var b = Math.floor(Math.random() * (19 - 0 + 1) + 0);
+  if (b === a && check === false) {
+    b++;
+    pickRandom.push(b);
+    this.imageDisplays[a] += 1;
+    check = true;
+  } else {
+    pickRandom.push(b);
+  }
+
+  var c = Math.floor(Math.random() * (19 - 0 + 1) + 0);
+  if (c === a || c === b && check === false) {
+    c++;
+    pickRandom.push(c);
+    check = true;
+  } else {
+    pickRandom.push(c);
+  }
+
+  console.log(a);
+  console.log(b);
+  console.log(c);
+
+};
+
+function randomLeft() {
+  // var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
+  // console.log(randomLeft[0]);
+  // productImageArray[pickRandom[0]].imageDisplays += 1;
+  clickLeft.src = productImageArray[pickRandom[0]].imagePath;
 };
 
 
 function randomCenter () {
-  var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  console.log(randomCenter);
-  clickCenter.src = productImageArray[i].imagePath;
+  // var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
+  // console.log(randomCenter[1]);
+  clickCenter.src = productImageArray[pickRandom[1]].imagePath;
 };
 
 
 function randomRight () {
-  var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  console.log(randomRight);
-  clickRight.src = productImageArray[i].imagePath;
+  // var i = Math.floor(Math.random() * (19 - 0 + 1) + 0);
+  // console.log(randomRight[2]);
+  clickRight.src = productImageArray[pickRandom[2]].imagePath;
 };
 
-randomLeft();
-randomCenter();
-randomRight();
+randomizer();
+randomLeft(pickRandom[0]);
+randomCenter(pickRandom[1]);
+randomRight(pickRandom[2]);
 // clickCenter.src = productImageArray[1].imagePath;
 // clickRight.src = productImageArray[2].imagePath;
 
@@ -88,3 +123,14 @@ randomRight();
 
 // EVENT LISTENER (LISTENING FOR CLICK IN THE SURVEY FIELD) AND TRIGGER HANDLER
 // clickField.addEventListener('click', handleSurveyClick);
+
+
+
+// if ((productImageArray[i].imageDisplays - 1) === i) {
+//   clickLeft.src = productImageArray[i].imagePath;
+// } else {
+//   var n = Math.floor(Math.random() * (19 - 0 + 1) + 0);
+//   console.log(randomLeft);
+//   productImageArray[n].imageDisplays += 1;
+//   clickLeft.src = productImageArray[n].imagePath;
+// }
