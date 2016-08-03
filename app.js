@@ -3,8 +3,11 @@
 
 var productImageArray = [];
 var displayRounds = 0;
-var positionLeft = 0;
-
+var myBarChart = new Chart (ctx, {
+  type: 'bar',
+  data: data,
+  options: options
+});
 
 //CONSTRUCTOR TO CREATE PROUDCT IMAGES AND PUSH INTO ARRAY
 function CatalogImage (imageFullName, imagePath) {
@@ -43,6 +46,7 @@ var clickField = document.getElementById('imageField');
 var clickLeft = document.getElementById('imageLeft');
 var clickCenter = document.getElementById('imageCenter');
 var clickRight = document.getElementById('imageRight');
+var buttonEvent = document.getElementById('button');
 
 
 var pickRandom = [];
@@ -114,28 +118,53 @@ function handleSurveyClick (event) {
   var eventClick = event.target.id;
   // console.log(event.target.id); //telss which DOM elevent was clicked
 
-  if (eventClick === 'imageLeft') {
-    displayRounds += 1;
-  } else if (eventClick === 'imageCenter') {
-    displayRounds += 1;
-  } else if (eventClick === 'imageRight') {
-    displayRounds += 1;
-  } else if (eventClick === 'imageField') {
+  if (eventClick === 'imageField') {
     alert('Please click on an image.');
+    return;
   }
 
+  for (var i = 0; i < productImageArray.length; i++) {
+    if(event.target.alt === productImageArray[i].imageFullName) {
+      productImageArray[i].imageVotes += 1;
+    }
+  }
 
-  if (displayRounds <= 25) {
-    displayThreeRandomImages();
-  } else {
+  displayRounds += 1;
+
+  if (displayRounds >= 5) {
     clickField.removeEventListener('click', handleSurveyClick);
+    button.hidden = false;
   }
 
   previouslyShown = pickRandom;
 
+  displayThreeRandomImages();
+
 };
+
+function handleResultsButton () {
+  displayVotingChart();
+};
+
+
+
+
+function displayVotingChart () {
+  var data = {
+    labels: productImageArray,
+    datasets: [
+      { }
+    ]
+
+  }
+}
+
+
+
+
 
 displayThreeRandomImages();
 
-// EVENT LISTENER (LISTENING FOR CLICK IN THE SURVEY FIELD) AND TRIGGER HANDLER
+// EVENT LISTENERS
 clickField.addEventListener('click', handleSurveyClick);
+button.addEventListener('click', handleResultsButton);
