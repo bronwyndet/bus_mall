@@ -2,6 +2,10 @@ h1 {
   font-size: 2em;
 }
 
+canvas {
+  width: 800px;
+}
+
 .surveyField {
   border: 2px dashed orange;
   width: 725px;

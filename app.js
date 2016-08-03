@@ -62,7 +62,7 @@ function generateThreeRandomNumbers () {
 
   // third position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  while (pickRandom[0] === pickRandom[2] || pickRandom[1] === pickRandom[2]) {
+  while (pickRandom[2] === pickRandom[0] || pickRandom[2] === pickRandom[1]) {
     pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
   }
 
@@ -160,6 +160,7 @@ function displayVotingChart () {
   myBarChart = new Chart (ctx, {
     type: 'bar',
     data: data,
+    options: false
   });
 };
 
