@@ -6,10 +6,17 @@ var votingResults = [];
 var chartNames = [];
 var pickRandom = [];
 var previouslyShown = [];
+// var localStorageImageArray = [];
 var myBarChart;
 
+
+if (JSON.parse(localStorage.getItem('storedVotingResults')).length > 1) {
+  votingResults = JSON.parse(localStorage.getItem('storedVotingResults'));
+  createCatalogImages();
+};
+
 //CONSTRUCTOR TO CREATE PROUDCT IMAGE OBJECTS AND PUSH INTO ARRAY
-function CatalogImage (imageFullName, imagePath) {
+function CatalogImage(imageFullName, imagePath) {
   this.imageFullName = imageFullName;
   this.imagePath = imagePath;
   this.imageDisplays = 0;
@@ -17,26 +24,28 @@ function CatalogImage (imageFullName, imagePath) {
   productImageArray.push(this);
 };
 
-new CatalogImage('R2D2 Luggage', 'img/bag.jpg');
-new CatalogImage('Banana Slicer', 'img/banana.jpg');
-new CatalogImage('Toilet Roll Tablet Stand', 'img/bathroom.jpg');
-new CatalogImage('Toeless Boots', 'img/boots.jpg');
-new CatalogImage('Eggs Toast Coffee Appliance', 'img/breakfast.jpg');
-new CatalogImage('Meatball Bubblegum', 'img/bubblegum.jpg');
-new CatalogImage('Inverted Chair', 'img/chair.jpg');
-new CatalogImage('Chthulhu Action Figure', 'img/cthulhu.jpg');
-new CatalogImage('Duck Mask for Dog', 'img/dog-duck.jpg');
-new CatalogImage('Dragon Meat', 'img/dragon.jpg');
-new CatalogImage('Utensil Pen Cap', 'img/pen.jpg');
-new CatalogImage('Pet Sweeper', 'img/pet-sweep.jpg');
-new CatalogImage('Pizza Scissors', 'img/scissors.jpg');
-new CatalogImage('Shark Sleeping Bag', 'img/shark.jpg');
-new CatalogImage('Onsie Sweeper', 'img/sweep.png');
-new CatalogImage('Tauntaun Sleeping Bag', 'img/tauntaun.jpg');
-new CatalogImage('Unicorn Spam Meat', 'img/unicorn.jpg');
-new CatalogImage('Tentacle USB', 'img/usb.gif');
-new CatalogImage('Watering Can', 'img/water-can.jpg');
-new CatalogImage('Contained Wine Glass', 'img/wine-glass.jpg');
+function createCatalogImages () {
+  new CatalogImage('R2D2 Luggage', 'img/bag.jpg');
+  new CatalogImage('Banana Slicer', 'img/banana.jpg');
+  new CatalogImage('Toilet Roll Tablet Stand', 'img/bathroom.jpg');
+  new CatalogImage('Toeless Boots', 'img/boots.jpg');
+  new CatalogImage('Eggs Toast Coffee Appliance', 'img/breakfast.jpg');
+  new CatalogImage('Meatball Bubblegum', 'img/bubblegum.jpg');
+  new CatalogImage('Inverted Chair', 'img/chair.jpg');
+  new CatalogImage('Chthulhu Action Figure', 'img/cthulhu.jpg');
+  new CatalogImage('Duck Mask for Dog', 'img/dog-duck.jpg');
+  new CatalogImage('Dragon Meat', 'img/dragon.jpg');
+  new CatalogImage('Utensil Pen Cap', 'img/pen.jpg');
+  new CatalogImage('Pet Sweeper', 'img/pet-sweep.jpg');
+  new CatalogImage('Pizza Scissors', 'img/scissors.jpg');
+  new CatalogImage('Shark Sleeping Bag', 'img/shark.jpg');
+  new CatalogImage('Onsie Sweeper', 'img/sweep.png');
+  new CatalogImage('Tauntaun Sleeping Bag', 'img/tauntaun.jpg');
+  new CatalogImage('Unicorn Spam Meat', 'img/unicorn.jpg');
+  new CatalogImage('Tentacle USB', 'img/usb.gif');
+  new CatalogImage('Watering Can', 'img/water-can.jpg');
+  new CatalogImage('Contained Wine Glass', 'img/wine-glass.jpg');
+}
 
 //REACHING OUT TO AND ACCESSING THE PAGE
 var clickField = document.getElementById('imageField');
@@ -44,10 +53,10 @@ var clickLeft = document.getElementById('imageLeft');
 var clickCenter = document.getElementById('imageCenter');
 var clickRight = document.getElementById('imageRight');
 var buttonEvent = document.getElementById('button');
-
+// var pageLoad = document.getElementById('busmall');
 
 // GENERATING RANDOM IMAGES TO BE USED BY displayThreeRandomImages
-function generateThreeRandomNumbers () {
+function generateThreeRandomNumbers() {
 
   pickRandom = [];
 
@@ -85,7 +94,7 @@ function generateThreeRandomNumbers () {
 
 
 //FUNCTION FOR DISPLAYING THE THREE IMAGES TO THE PAGE USING THE RANDOM NUMBERS FOR INDEXES
-function displayThreeRandomImages () {
+function displayThreeRandomImages() {
 
   generateThreeRandomNumbers();
 
@@ -118,18 +127,23 @@ function handleSurveyClick (event) {
   for (var i = 0; i < productImageArray.length; i++) {
     if(event.target.alt === productImageArray[i].imageFullName) {
       productImageArray[i].imageVotes += 1;
+      if (votingResults.length > 1) {
+        votingResults[i] += 1;
+      }
     }
   }
 
   displayRounds += 1;
 
-  if (displayRounds >= 25) {
+  if (displayRounds >= 5) {
     clickField.removeEventListener('click', handleSurveyClick);
     button.hidden = false;
     for (var n = 0; n < productImageArray.length; n++) {
       chartNames.push(productImageArray[n].imageFullName);
-      votingResults.push(productImageArray[n].imageVotes);
+      // if (votingResults.length !== productImageArray.length) {
+      // votingResults.push(productImageArray[n].imageVotes);
     }
+    localStorage.setItem('storedVotingResults', JSON.stringify(votingResults));
   }
 
   previouslyShown = pickRandom;
@@ -139,7 +153,7 @@ function handleSurveyClick (event) {
 };
 
 //FUNCTION TO HANDLE CLICKING THE BUTTON, WHICH WILL TRIGGER GENERATING THE CHART
-function handleResultsButton () {
+function handleResultsButton() {
   displayVotingChart();
 };
 
@@ -155,7 +169,7 @@ var data = {
 };
 
 //FUNCTION TO GENERATE THE CHART FROM CLICKING THE VOTING RESULTS BUTTON
-function displayVotingChart () {
+function displayVotingChart() {
   var ctx = document.getElementById('votingResults').getContext('2d');
   myBarChart = new Chart (ctx, {
     type: 'bar',
@@ -164,9 +178,24 @@ function displayVotingChart () {
   });
 };
 
-
 displayThreeRandomImages();
 
+// function handlePageLoad() {
+//   if (localStorageImageArray.length >= 1) {
+//     var retrievedImageArray = JSON.parse(localStorage.getItem('justImageArray')),
+//     productImageArray = retrievedImageArray;
+//     // now need to trigger all the code except the constructor???
+//   } else {
+//     createCatalogImages();
+//   }
+// }
+
+
+
+
+
 // EVENT LISTENERS
+
+// pageLoad.addEventListener('load', handlePageLoad);
 clickField.addEventListener('click', handleSurveyClick);
-button.addEventListener('click', handleResultsButton);
+buttonEvent.addEventListener('click', handleResultsButton);
