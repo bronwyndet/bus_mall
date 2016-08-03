@@ -1,21 +1,20 @@
 'use strict';
 
-
 var productImageArray = [];
 var displayRounds = 0;
 var votingResults = [];
 var chartNames = [];
+var pickRandom = [];
+var previouslyShown = [];
 var myBarChart;
 
-//CONSTRUCTOR TO CREATE PROUDCT IMAGES AND PUSH INTO ARRAY
+//CONSTRUCTOR TO CREATE PROUDCT IMAGE OBJECTS AND PUSH INTO ARRAY
 function CatalogImage (imageFullName, imagePath) {
   this.imageFullName = imageFullName;
   this.imagePath = imagePath;
   this.imageDisplays = 0;
   this.imageVotes = 0;
   productImageArray.push(this);
-
-  // console.log(this);
 };
 
 new CatalogImage('R2D2 Luggage', 'img/bag.jpg');
@@ -47,10 +46,6 @@ var clickRight = document.getElementById('imageRight');
 var buttonEvent = document.getElementById('button');
 
 
-var pickRandom = [];
-var previouslyShown = [];
-
-
 // GENERATING RANDOM IMAGES TO BE USED BY displayThreeRandomImages
 function generateThreeRandomNumbers () {
 
@@ -71,6 +66,7 @@ function generateThreeRandomNumbers () {
     pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
   }
 
+//WHILE LOOP TO PREVENT DISPLAY OF AN IMAGE THAT WAS IN THE PREVIOUS VIEW
   while (
       pickRandom[0] === previouslyShown[0] ||
       pickRandom[0] === previouslyShown[1] ||
@@ -88,6 +84,7 @@ function generateThreeRandomNumbers () {
 };
 
 
+//FUNCTION FOR DISPLAYING THE THREE IMAGES TO THE PAGE USING THE RANDOM NUMBERS FOR INDEXES
 function displayThreeRandomImages () {
 
   generateThreeRandomNumbers();
@@ -104,9 +101,6 @@ function displayThreeRandomImages () {
   clickRight.alt = productImageArray[pickRandom[2]].imageFullName;
   productImageArray[pickRandom[2]].imageDisplays += 1;
 
-  // console.log(previouslyShown + ' were just shown');
-  // console.log(pickRandom + ' are the current images');
-  //
 };
 
 
@@ -129,7 +123,7 @@ function handleSurveyClick (event) {
 
   displayRounds += 1;
 
-  if (displayRounds >= 5) {
+  if (displayRounds >= 25) {
     clickField.removeEventListener('click', handleSurveyClick);
     button.hidden = false;
     for (var n = 0; n < productImageArray.length; n++) {
@@ -144,30 +138,29 @@ function handleSurveyClick (event) {
 
 };
 
+//FUNCTION TO HANDLE CLICKING THE BUTTON, WHICH WILL TRIGGER GENERATING THE CHART
 function handleResultsButton () {
   displayVotingChart();
 };
 
-
-
-
+//CHART.JS INPUT
 var data = {
-    labels: chartNames,
-    datasets: [
-      { data: votingResults,
-        backgroundColor: 'green',
-        hoverBackgroundColor: 'purple',
-      }
-    ]
+  labels: chartNames,
+  datasets: [
+    { data: votingResults,
+      backgroundColor: 'green',
+      hoverBackgroundColor: 'purple',
+    }
+  ]
 };
 
-
+//FUNCTION TO GENERATE THE CHART FROM CLICKING THE VOTING RESULTS BUTTON
 function displayVotingChart () {
   var ctx = document.getElementById('votingResults').getContext('2d');
   myBarChart = new Chart (ctx, {
-   type: 'bar',
-   data: data,
- });
+    type: 'bar',
+    data: data,
+  });
 };
 
 
