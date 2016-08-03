@@ -2,6 +2,8 @@
 
 
 var productImageArray = [];
+var displayRounds = 0;
+var positionLeft = 0;
 
 
 //CONSTRUCTOR TO CREATE PROUDCT IMAGES AND PUSH INTO ARRAY
@@ -47,126 +49,93 @@ var pickRandom = [];
 var previouslyShown = [];
 
 
-// CODE TO MAKE RANDOM IMAGES APPEAR ON PAGE AND DIFFERENT IN ALL 3 POSITIONS (and not just displayed
-function randomizer () {
+// GENERATING RANDOM IMAGES TO BE USED BY displayThreeRandomImages
+function generateThreeRandomNumbers () {
 
-  var a = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  // justDisplayed.push(a);
-  pickRandom.push(a);
+  pickRandom = [];
 
-  var b = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  if (b === a) {
-    b++;
-    pickRandom.push(b);
-  } else {
-    pickRandom.push(b);
-  };
+  // first position random number
+  pickRandom.push(Math.floor(Math.random() * productImageArray.length));
 
-  var c = Math.floor(Math.random() * (19 - 0 + 1) + 0);
-  if (c === b && c !== (a + 1)) {
-    c++;
-    pickRandom.push(c);
-  } else if (c === a && c !== (b - 1)) {
-    c++;
-    pickRandom.push(c);
-  } else {
-    pickRandom.push(c);
-  };
+  // second position random number
+  pickRandom.push(Math.floor(Math.random() * productImageArray.length));
+  while (pickRandom[0] === pickRandom[1]) {
+    pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
+  }
 
-  previouslyShown = pickRandom;
+  // third position random number
+  pickRandom.push(Math.floor(Math.random() * productImageArray.length));
+  while (pickRandom[0] === pickRandom[2] || pickRandom[1] === pickRandom[2]) {
+    pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
+  }
 
-  console.log(previouslyShown + ' were just shown');
-  console.log(pickRandom + ' are the current images');
-
-// METHOD TO PREVENT IMAGE FROM BEING DISPLAYED THAT WAS JUST DISPLAYED ON PREVOIUS CLICK
-// (not working yet)
-
-  // var justDisplayed = [];
-  // console.log(justDisplayed);
-  //
-  // for (var i = 0; i < justDisplayed.length; i++) {
-  //   if (justDisplayed[i] === pickRandom[0] || justDisplayed[i] === pickRandom[1] || justDisplayed === pickRandom[2]) {
-  //     randomizer();
-  //   } else {
-  //     return;
-  //   }
-  // };
-  //
-  // justDisplayedLeft = null;
-  // justDisplayedLeft = null;
-  // justDisplayedLeft = null;
-
-  //
-  // console.log(a);
-  // console.log(b);
-  // console.log(c);
-
+  while (
+      pickRandom[0] === previouslyShown[0] ||
+      pickRandom[0] === previouslyShown[1] ||
+      pickRandom[0] === previouslyShown[2] ||
+      pickRandom[1] === previouslyShown[0] ||
+      pickRandom[1] === previouslyShown[1] ||
+      pickRandom[1] === previouslyShown[2] ||
+      pickRandom[2] === previouslyShown[0] ||
+      pickRandom[2] === previouslyShown[1] ||
+      pickRandom[2] === previouslyShown[2] ) {
+    pickRandom[0] = (Math.floor(Math.random() * productImageArray.length));
+    pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
+    pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
+  }
 };
 
-function randomLeft() {
+
+function displayThreeRandomImages () {
+
+  generateThreeRandomNumbers();
+
   clickLeft.src = productImageArray[pickRandom[0]].imagePath;
   clickLeft.alt = productImageArray[pickRandom[0]].imageFullName;
   productImageArray[pickRandom[0]].imageDisplays += 1;
-  productImageArray[pickRandom[0]].imageVotes += 1;
 
-  console.log(productImageArray[pickRandom[0]].imageFullName + ' has ' + productImageArray[pickRandom[0]].imageDisplays + ' views');
-};
-
-function randomCenter () {
   clickCenter.src = productImageArray[pickRandom[1]].imagePath;
   clickCenter.alt = productImageArray[pickRandom[1]].imageFullName;
   productImageArray[pickRandom[1]].imageDisplays += 1;
 
-  console.log(productImageArray[pickRandom[1]].imageFullName + ' has ' + productImageArray[pickRandom[1]].imageDisplays + ' views');
-};
-
-function randomRight () {
   clickRight.src = productImageArray[pickRandom[2]].imagePath;
   clickRight.alt = productImageArray[pickRandom[2]].imageFullName;
   productImageArray[pickRandom[2]].imageDisplays += 1;
 
-  console.log(productImageArray[pickRandom[2]].imageFullName + ' has ' + productImageArray[pickRandom[2]].imageDisplays + ' views');
+  // console.log(previouslyShown + ' were just shown');
+  // console.log(pickRandom + ' are the current images');
+  //
 };
 
 
-
-
-// EVENT HANDLER TO ...
+// EVENT HANDLER FOR CLICK VOTES
 function handleSurveyClick (event) {
 
   var eventClick = event.target.id;
-  console.log(event.target.id); //telss which DOM elevent was clicked
+  // console.log(event.target.id); //telss which DOM elevent was clicked
 
   if (eventClick === 'imageLeft') {
-    this.imageVotes += 1;
+    displayRounds += 1;
+  } else if (eventClick === 'imageCenter') {
+    displayRounds += 1;
+  } else if (eventClick === 'imageRight') {
+    displayRounds += 1;
+  } else if (eventClick === 'imageField') {
+    alert('Please click on an image.');
   }
 
-  // if (eventClick === 'imageCenter') {
-  //   this.imageVotes += 1;
-  // }
-  //
-  // if (eventClick === 'imageRight') {
-  //   this.imageVotes += 1;
-  // }
-  //
-  // for (var i = 0; i < productImageArray.length; i++) {
-  //   if (event.target.alt === productImageArray[i].imageFullName) {
-  //     productImageArray[i].imageVotes += 1;
-  //     console.log(productImageArray[i].imageVotes);
-  //   }
 
-  randomizer();
-  randomLeft(pickRandom[0]);
-  randomCenter(pickRandom[1]);
-  randomRight(pickRandom[2]);
+  if (displayRounds <= 25) {
+    displayThreeRandomImages();
+  } else {
+    clickField.removeEventListener('click', handleSurveyClick);
+  }
+
+  previouslyShown = pickRandom;
 
 };
 
-randomizer();
-randomLeft(pickRandom[0]);
-randomCenter(pickRandom[1]);
-randomRight(pickRandom[2]);
-
+displayThreeRandomImages();
 
 // EVENT LISTENER (LISTENING FOR CLICK IN THE SURVEY FIELD) AND TRIGGER HANDLER
 clickField.addEventListener('click', handleSurveyClick);
