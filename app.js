@@ -3,11 +3,9 @@
 
 var productImageArray = [];
 var displayRounds = 0;
-var myBarChart = new Chart (ctx, {
-  type: 'bar',
-  data: data,
-  options: options
-});
+var votingResults = [];
+var chartNames = [];
+var myBarChart;
 
 //CONSTRUCTOR TO CREATE PROUDCT IMAGES AND PUSH INTO ARRAY
 function CatalogImage (imageFullName, imagePath) {
@@ -134,6 +132,10 @@ function handleSurveyClick (event) {
   if (displayRounds >= 5) {
     clickField.removeEventListener('click', handleSurveyClick);
     button.hidden = false;
+    for (var n = 0; n < productImageArray.length; n++) {
+      chartNames.push(productImageArray[n].imageFullName);
+      votingResults.push(productImageArray[n].imageVotes);
+    }
   }
 
   previouslyShown = pickRandom;
@@ -149,18 +151,24 @@ function handleResultsButton () {
 
 
 
-function displayVotingChart () {
-  var data = {
-    labels: productImageArray,
+var data = {
+    labels: chartNames,
     datasets: [
-      { }
+      { data: votingResults,
+        backgroundColor: 'green',
+        hoverBackgroundColor: 'purple',
+      }
     ]
-
-  }
-}
+};
 
 
-
+function displayVotingChart () {
+  var ctx = document.getElementById('votingResults').getContext('2d');
+  myBarChart = new Chart (ctx, {
+   type: 'bar',
+   data: data,
+ });
+};
 
 
 displayThreeRandomImages();
