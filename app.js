@@ -8,7 +8,6 @@ var percentResults = [];
 var chartNames = [];
 var pickRandom = [];
 var previouslyShown = [];
-// var localStorageImageArray = [];
 var justVotesChart;
 var percentChart;
 
@@ -48,7 +47,7 @@ function createCatalogImages () {
   new CatalogImage('Tentacle USB', 'img/usb.gif');
   new CatalogImage('Watering Can', 'img/water-can.jpg');
   new CatalogImage('Contained Wine Glass', 'img/wine-glass.jpg');
-}
+};
 
 //REACHING OUT TO AND ACCESSING THE PAGE
 var clickField = document.getElementById('imageField');
@@ -56,6 +55,8 @@ var clickLeft = document.getElementById('imageLeft');
 var clickCenter = document.getElementById('imageCenter');
 var clickRight = document.getElementById('imageRight');
 var buttonEvent = document.getElementById('button');
+var votingText = document.getElementById('votingText');
+var percentText = document.getElementById('percentText');
 // var pageLoad = document.getElementById('busmall');
 
 // GENERATING RANDOM IMAGES TO BE USED BY displayThreeRandomImages
@@ -99,7 +100,6 @@ function generateThreeRandomNumbers() {
   console.log(pickRandom + ' are the current indexes');
 };
 
-
 //FUNCTION FOR DISPLAYING THE THREE IMAGES TO THE PAGE USING THE RANDOM NUMBERS FOR INDEXES
 function displayThreeRandomImages() {
 
@@ -118,7 +118,6 @@ function displayThreeRandomImages() {
   productImageArray[pickRandom[2]].imageDisplays += 1;
 
 };
-
 
 // EVENT HANDLER FOR CLICK VOTES
 function handleSurveyClick (event) {
@@ -139,7 +138,7 @@ function handleSurveyClick (event) {
 
   displayRounds += 1;
 
-  if (displayRounds >= 25) {
+  if (displayRounds > 25) {
     clickField.removeEventListener('click', handleSurveyClick);
     button.hidden = false;
     for (var n = 0; n < productImageArray.length; n++) {
@@ -154,7 +153,6 @@ function handleSurveyClick (event) {
   console.log(previouslyShown + ' is the previouslyShown indexes');
 
   displayThreeRandomImages();
-
 };
 
 
@@ -164,8 +162,6 @@ function calcVotingPercentages() {
   }
 };
 
-
-
 //FUNCTION TO HANDLE CLICKING THE BUTTON, WHICH WILL TRIGGER GENERATING THE CHART
 function handleResultsButton() {
   calcVotingPercentages();
@@ -173,10 +169,9 @@ function handleResultsButton() {
   displayPercentageChart();
 };
 
-
-
 //FUNCTION TO GENERATE THE CHART FROM CLICKING THE VOTING RESULTS BUTTON
 function displayVotingChart() {
+  votingText.hidden = false;
   //CHART.JS INPUT
   var data = {
     labels: chartNames,
@@ -198,6 +193,8 @@ function displayVotingChart() {
 
 // FUNCTION TO GENERATE PERCENTAGES CHART
 function displayPercentageChart() {
+  percentText.hidden = false;
+
   //CHART.JS INPUT
   var data = {
     labels: chartNames,
@@ -217,12 +214,8 @@ function displayPercentageChart() {
 };
 
 
-
 displayThreeRandomImages();
 
-
 // EVENT LISTENERS
-
-// pageLoad.addEventListener('load', handlePageLoad);
 clickField.addEventListener('click', handleSurveyClick);
 buttonEvent.addEventListener('click', handleResultsButton);
