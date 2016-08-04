@@ -3,15 +3,18 @@
 var productImageArray = [];
 var displayRounds = 0;
 var votingResults = [];
+var imageDisplaysArray = [];
+var percentResults = [];
 var chartNames = [];
 var pickRandom = [];
 var previouslyShown = [];
 // var localStorageImageArray = [];
-var myBarChart;
+var justVotesChart;
+var percentChart;
 
-
-if (JSON.parse(localStorage.getItem('storedVotingResults')).length > 1) {
-  votingResults = JSON.parse(localStorage.getItem('storedVotingResults'));
+if (JSON.parse(localStorage.getItem('storedCatalogObjects'))) {
+  productImageArray = JSON.parse(localStorage.getItem('storedCatalogObjects'));
+} else {
   createCatalogImages();
 };
 
@@ -127,9 +130,6 @@ function handleSurveyClick (event) {
   for (var i = 0; i < productImageArray.length; i++) {
     if(event.target.alt === productImageArray[i].imageFullName) {
       productImageArray[i].imageVotes += 1;
-      if (votingResults.length > 1) {
-        votingResults[i] += 1;
-      }
     }
   }
 
@@ -140,10 +140,10 @@ function handleSurveyClick (event) {
     button.hidden = false;
     for (var n = 0; n < productImageArray.length; n++) {
       chartNames.push(productImageArray[n].imageFullName);
-      // if (votingResults.length !== productImageArray.length) {
-      // votingResults.push(productImageArray[n].imageVotes);
+      votingResults.push(productImageArray[n].imageVotes);
+      imageDisplaysArray.push(productImageArray[n].imageDisplays);
     }
-    localStorage.setItem('storedVotingResults', JSON.stringify(votingResults));
+    localStorage.setItem('storedCatalogObjects', JSON.stringify(productImageArray));
   }
 
   previouslyShown = pickRandom;
@@ -152,46 +152,68 @@ function handleSurveyClick (event) {
 
 };
 
-//FUNCTION TO HANDLE CLICKING THE BUTTON, WHICH WILL TRIGGER GENERATING THE CHART
-function handleResultsButton() {
-  displayVotingChart();
+
+function calcVotingPercentages() {
+  for (var k = 0; k < productImageArray.length; k++) {
+    percentResults.push(Math.floor((votingResults[k] / imageDisplaysArray[k]) * 100));
+  }
 };
 
-//CHART.JS INPUT
-var data = {
-  labels: chartNames,
-  datasets: [
-    { data: votingResults,
-      backgroundColor: 'green',
-      hoverBackgroundColor: 'purple',
-    }
-  ]
+
+
+//FUNCTION TO HANDLE CLICKING THE BUTTON, WHICH WILL TRIGGER GENERATING THE CHART
+function handleResultsButton() {
+  calcVotingPercentages();
+  displayVotingChart();
+  displayPercentageChart();
 };
+
+
 
 //FUNCTION TO GENERATE THE CHART FROM CLICKING THE VOTING RESULTS BUTTON
 function displayVotingChart() {
+  //CHART.JS INPUT
+  var data = {
+    labels: chartNames,
+    datasets: [
+      { data: votingResults,
+        backgroundColor: 'green',
+        hoverBackgroundColor: 'purple',
+      }
+    ]
+  };
+
   var ctx = document.getElementById('votingResults').getContext('2d');
-  myBarChart = new Chart (ctx, {
+  justVotesChart = new Chart (ctx, {
     type: 'bar',
     data: data,
     options: false
   });
 };
 
+// FUNCTION TO GENERATE PERCENTAGES CHART
+function displayPercentageChart() {
+  //CHART.JS INPUT
+  var data = {
+    labels: chartNames,
+    datasets: [
+      { data: percentResults,
+        backgroundColor: 'green',
+        hoverBackgroundColor: 'purple',
+      }
+    ]
+  };
+
+  var ctx = document.getElementById('percentResults').getContext('2d');
+  percentChart = new Chart (ctx, {
+    type: 'bar',
+    data: data,
+  });
+};
+
+
+
 displayThreeRandomImages();
-
-// function handlePageLoad() {
-//   if (localStorageImageArray.length >= 1) {
-//     var retrievedImageArray = JSON.parse(localStorage.getItem('justImageArray')),
-//     productImageArray = retrievedImageArray;
-//     // now need to trigger all the code except the constructor???
-//   } else {
-//     createCatalogImages();
-//   }
-// }
-
-
-
 
 
 // EVENT LISTENERS
