@@ -68,13 +68,15 @@ function generateThreeRandomNumbers() {
 
   // second position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  while (pickRandom[0] === pickRandom[1]) {
+  while (pickRandom[0] == pickRandom[1]) {
+    console.log('dup detected 2nd position');
     pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
   }
 
   // third position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  while (pickRandom[2] === pickRandom[0] || pickRandom[2] === pickRandom[1]) {
+  while (pickRandom[1] == pickRandom[2] || pickRandom[0] == pickRandom[2]) {
+    console.log('dup detected 3rd position');
     pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
   }
 
@@ -92,7 +94,9 @@ function generateThreeRandomNumbers() {
     pickRandom[0] = (Math.floor(Math.random() * productImageArray.length));
     pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
     pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
+    console.log('had a match between old and new indexes');
   }
+  console.log(pickRandom + ' are the current indexes');
 };
 
 
@@ -135,7 +139,7 @@ function handleSurveyClick (event) {
 
   displayRounds += 1;
 
-  if (displayRounds >= 5) {
+  if (displayRounds >= 25) {
     clickField.removeEventListener('click', handleSurveyClick);
     button.hidden = false;
     for (var n = 0; n < productImageArray.length; n++) {
@@ -147,6 +151,7 @@ function handleSurveyClick (event) {
   }
 
   previouslyShown = pickRandom;
+  console.log(previouslyShown + ' is the previouslyShown indexes');
 
   displayThreeRandomImages();
 
