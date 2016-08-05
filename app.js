@@ -69,14 +69,14 @@ function generateThreeRandomNumbers() {
 
   // second position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  while (pickRandom[0] == pickRandom[1]) {
+  while (pickRandom[0] === pickRandom[1]) {
     console.log('dup detected 2nd position');
     pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
   }
 
   // third position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  while (pickRandom[1] == pickRandom[2] || pickRandom[0] == pickRandom[2]) {
+  while (pickRandom[1] === pickRandom[2] || pickRandom[0] === pickRandom[2]) {
     console.log('dup detected 3rd position');
     pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
   }
@@ -91,7 +91,10 @@ function generateThreeRandomNumbers() {
       pickRandom[1] === previouslyShown[2] ||
       pickRandom[2] === previouslyShown[0] ||
       pickRandom[2] === previouslyShown[1] ||
-      pickRandom[2] === previouslyShown[2] ) {
+      pickRandom[2] === previouslyShown[2] ||
+      pickRandom[0] === pickRandom[1] ||
+      pickRandom[1] === pickRandom[2] ||
+      pickRandom[0] === pickRandom[2] ) {
     pickRandom[0] = (Math.floor(Math.random() * productImageArray.length));
     pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
     pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
@@ -138,7 +141,7 @@ function handleSurveyClick (event) {
 
   displayRounds += 1;
 
-  if (displayRounds > 25) {
+  if (displayRounds > 4) {
     clickField.removeEventListener('click', handleSurveyClick);
     button.hidden = false;
     for (var n = 0; n < productImageArray.length; n++) {
@@ -187,7 +190,7 @@ function displayVotingChart() {
   justVotesChart = new Chart (ctx, {
     type: 'bar',
     data: data,
-    options: false
+    options: false,
   });
 };
 
@@ -210,6 +213,7 @@ function displayPercentageChart() {
   percentChart = new Chart (ctx, {
     type: 'bar',
     data: data,
+    options: false,
   });
 };
 
