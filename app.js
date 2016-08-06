@@ -141,7 +141,7 @@ function handleSurveyClick (event) {
 
   displayRounds += 1;
 
-  if (displayRounds > 4) {
+  if (displayRounds > 24) {
     clickField.removeEventListener('click', handleSurveyClick);
     button.hidden = false;
     for (var n = 0; n < productImageArray.length; n++) {
