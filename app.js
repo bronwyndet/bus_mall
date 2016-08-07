@@ -11,6 +11,7 @@ var previouslyShown = [];
 var justVotesChart;
 var percentChart;
 
+// VERIFY IF IMAGE OBJECTS ALREADY EXIST IN LOCAL STORAGE, IF NOT THEN CREATE OBJECTS
 if (JSON.parse(localStorage.getItem('storedCatalogObjects'))) {
   productImageArray = JSON.parse(localStorage.getItem('storedCatalogObjects'));
 } else {
@@ -26,6 +27,7 @@ function CatalogImage(imageFullName, imagePath) {
   productImageArray.push(this);
 };
 
+// FUNCITON TO CREATE PODUCT IMAGE OBJECTS
 function createCatalogImages () {
   new CatalogImage('R2D2 Luggage', 'img/bag.jpg');
   new CatalogImage('Banana Slicer', 'img/banana.jpg');
@@ -60,8 +62,6 @@ var votingParagraph = document.getElementById('votingParagraph');
 var percentText = document.getElementById('percentText');
 var percentParagraph = document.getElementById('percentParagraph');
 
-// var pageLoad = document.getElementById('busmall');
-
 // GENERATING RANDOM IMAGES TO BE USED BY displayThreeRandomImages
 function generateThreeRandomNumbers() {
 
@@ -69,22 +69,12 @@ function generateThreeRandomNumbers() {
 
   // first position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-
   // second position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  // while (pickRandom[0] === pickRandom[1]) {
-  //   console.log('dup detected 2nd position');
-  //   pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
-  // }
-
   // third position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  // while (pickRandom[1] === pickRandom[2] || pickRandom[0] === pickRandom[2]) {
-  //   console.log('dup detected 3rd position');
-  //   pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
-  // }
 
-//WHILE LOOP TO PREVENT DISPLAY OF AN IMAGE THAT WAS IN THE PREVIOUS VIEW
+  //WHILE LOOP TO PREVENT DISPLAY OF IMAGE FROM PREVIOUS VIEW, AND PREVENT DUPLICATE IMAGES IN ONE VIEW
   while (
       pickRandom[0] === previouslyShown[0] ||
       pickRandom[0] === previouslyShown[1] ||
@@ -101,9 +91,7 @@ function generateThreeRandomNumbers() {
     pickRandom[0] = (Math.floor(Math.random() * productImageArray.length));
     pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
     pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
-    console.log('had a match between old and new indexes');
   }
-  console.log(pickRandom + ' are the current indexes');
 };
 
 //FUNCTION FOR DISPLAYING THE THREE IMAGES TO THE PAGE USING THE RANDOM NUMBERS FOR INDEXES
@@ -155,7 +143,6 @@ function handleSurveyClick (event) {
   }
 
   previouslyShown = pickRandom;
-  console.log(previouslyShown + ' is the previouslyShown indexes');
 
   displayThreeRandomImages();
 };
