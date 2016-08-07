@@ -56,7 +56,10 @@ var clickCenter = document.getElementById('imageCenter');
 var clickRight = document.getElementById('imageRight');
 var buttonEvent = document.getElementById('button');
 var votingText = document.getElementById('votingText');
+var votingParagraph = document.getElementById('votingParagraph');
 var percentText = document.getElementById('percentText');
+var percentParagraph = document.getElementById('percentParagraph');
+
 // var pageLoad = document.getElementById('busmall');
 
 // GENERATING RANDOM IMAGES TO BE USED BY displayThreeRandomImages
@@ -69,17 +72,17 @@ function generateThreeRandomNumbers() {
 
   // second position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  while (pickRandom[0] === pickRandom[1]) {
-    console.log('dup detected 2nd position');
-    pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
-  }
+  // while (pickRandom[0] === pickRandom[1]) {
+  //   console.log('dup detected 2nd position');
+  //   pickRandom[1] = (Math.floor(Math.random() * productImageArray.length));
+  // }
 
   // third position random number
   pickRandom.push(Math.floor(Math.random() * productImageArray.length));
-  while (pickRandom[1] === pickRandom[2] || pickRandom[0] === pickRandom[2]) {
-    console.log('dup detected 3rd position');
-    pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
-  }
+  // while (pickRandom[1] === pickRandom[2] || pickRandom[0] === pickRandom[2]) {
+  //   console.log('dup detected 3rd position');
+  //   pickRandom[2] = (Math.floor(Math.random() * productImageArray.length));
+  // }
 
 //WHILE LOOP TO PREVENT DISPLAY OF AN IMAGE THAT WAS IN THE PREVIOUS VIEW
   while (
@@ -126,7 +129,6 @@ function displayThreeRandomImages() {
 function handleSurveyClick (event) {
 
   var eventClick = event.target.id;
-  // console.log(event.target.id); //telss which DOM elevent was clicked
 
   if (eventClick === 'imageField') {
     alert('Please click on an image.');
@@ -158,23 +160,25 @@ function handleSurveyClick (event) {
   displayThreeRandomImages();
 };
 
-
+// FUNCTION TO CALCULATE PERCENTAGE OF IMAGE VOTES TO IMAGE DISPLAYS
 function calcVotingPercentages() {
   for (var k = 0; k < productImageArray.length; k++) {
     percentResults.push(Math.floor((votingResults[k] / imageDisplaysArray[k]) * 100));
   }
 };
 
-//FUNCTION TO HANDLE CLICKING THE BUTTON, WHICH WILL TRIGGER GENERATING THE CHART
+//FUNCTION TO HANDLE CLICKING THE RESULTS BUTTON, WHICH WILL TRIGGER GENERATING THE CHARTS
 function handleResultsButton() {
   calcVotingPercentages();
   displayVotingChart();
   displayPercentageChart();
 };
 
-//FUNCTION TO GENERATE THE CHART FROM CLICKING THE VOTING RESULTS BUTTON
+//FUNCTION TO GENERATE THE VOTES CHART
 function displayVotingChart() {
   votingText.hidden = false;
+  votingParagraph.hidden = false;
+
   //CHART.JS INPUT
   var data = {
     labels: chartNames,
@@ -197,6 +201,8 @@ function displayVotingChart() {
 // FUNCTION TO GENERATE PERCENTAGES CHART
 function displayPercentageChart() {
   percentText.hidden = false;
+  percentParagraph.hidden = false;
+
 
   //CHART.JS INPUT
   var data = {
