@@ -7,40 +7,49 @@
     </head>
 
     <body id="busmall">
-      <section>
-        <h1>Bus Mall Product Survey</h1>
-          <p>Thank you for participating in our <b>Bus Mall Product Survey</b>. All votes are anonymous, we do not retain personal information from survey participants. The voting information collected will be used to help drive future production decisions on our product offerings.</p>
 
-        <h2>Survey Instructions</h2>
-          <p>Please 'click' on whichever of the three images shown that you would be most likely to purchase out of the three. <b>Please be sure to click only on an image (and not the area surrounding the image)</b>.</p>
-          <p>There will be 25 rounds of images and following the last round you will have an opportunity to review the results from all completed surveys. Results are calculated on a simple voting tally and as a percentage of the votes per times the image was displayed.</p>
-      </section>
+      <header>
+        <div>
+          <h1>Bus Mall Product Survey</h1>
+        </div>
+      </header>
 
-      <section class="surveyField" id="imageField">
-        <img src="" class="imageRow" id="imageLeft">
-        <img src="" class="imageRow" id="imageCenter">
-        <img src="" class="imageRow" id="imageRight">
-      </section>
+      <main>
+        <section>
+          <h2>Bus Mall Product Survey</h2>
+            <p class="p_last">Thank you for participating in our <b>Bus Mall Product Survey</b>. All votes are anonymous, we do not retain personal information from survey participants. The voting information collected will be used to help drive future production decisions on our product offerings.</p>
 
-      <button id="button" hidden>Click for Voting Results!</button>
+          <h2>Survey Instructions</h2>
+            <p>Please 'click' on whichever of the three images shown that you would be most likely to purchase out of the three. <b>Please be sure to click only on an image (and not the area surrounding the image)</b>.</p>
+            <p class="p_last">There will be 25 rounds of images and following the last round you will have an opportunity to review the results from all completed surveys. Results are calculated on a simple voting tally and also as a percentage of the votes per times the image was displayed.</p>
+        </section>
 
-      <section id="votingText" hidden>
-        <h3>Voting Results</h3>
-          <p>Below are the votes received for each product from all surveys.</p>
-      </section>
+        <section class="surveyField" id="imageField">
+          <img src="" class="imageRow" id="imageLeft">
+          <img src="" class="imageRow" id="imageCenter">
+          <img src="" class="imageRow" id="imageRight">
+        </section>
 
-      <section class="chartField" id="votingChart">
-        <canvas id="votingResults"> </canvas>
-      </section>
+        <button id="button" hidden>Click for Voting Results!</button>
 
-      <section id=percentText hidden>
-        <h3>Percentage Results</h3>
-          <p>Below are the percentage of votes per displays for all products from all surveys.</p>
-      </section>
+        <section>
+          <h2 id="votingText" hidden>Voting Results</h2>
+            <p id="votingParagraph" hidden>Below are the votes received for each product from all surveys.</p>
+        </section>
 
-      <section class="percentField" id="percentChart">
-        <canvas id="percentResults"> </canvas>
-      </section>
+        <section class="chartField" id="votingChart">
+          <canvas id="votingResults"> </canvas>
+        </section>
+
+        <section>
+          <h2 id=percentText hidden>Percentage Results</h2>
+            <p id=percentParagraph hidden>Below are the percentage of votes per displays for all products from all surveys.</p>
+        </section>
+
+        <section class="percentField" id="percentChart">
+          <canvas id="percentResults"> </canvas>
+        </section>
+      </main>
 
       <script src="app.js"></script>
     </body>
